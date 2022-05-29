@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { userLogin } from "@/api";
+import { useUserStore } from "@/stores/user";
 import type { FormInst } from "naive-ui";
 import { ref } from "vue";
 import { rules } from "../tools/login";
@@ -84,32 +84,26 @@ const isMobile = ref(false);
 const mobileFormRef = ref<FormInst | null>(null);
 const userFormRef = ref<FormInst | null>(null);
 const modelRef = ref<ILoginType>({
-  username: "",
-  password: "",
+  username: "tqt",
+  password: "roletang",
   mobile: "",
 });
+const userStore = useUserStore();
 
-const changeMethod = (flag: boolean) => (isMobile.value = flag);
+const changeMethod = (flag: boolean) => {
+  modelRef.value.username = "";
+  modelRef.value.password = "";
+  modelRef.value.mobile = "";
+  isMobile.value = flag;
+};
 // 点击登陆
 const login = () => {
-  // 两种方式
-  if (isMobile.value) {
-    mobileFormRef.value?.validate((errors) => {
-      console.log(errors);
-    });
-  } else {
-    userFormRef.value?.validate((errors) => {
-      if (!errors) {
-        userLogin({
-          username: modelRef.value.username as string,
-          password: modelRef.value.password as string,
-        }).then(
-          (res) => console.log("res", res),
-          (reason) => console.log("reason" + reason)
-        );
-      }
-    });
-  }
+  userStore.getUser(
+    isMobile.value,
+    mobileFormRef.value,
+    userFormRef.value,
+    modelRef.value
+  );
 };
 </script>
 
