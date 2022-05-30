@@ -1,7 +1,4 @@
-import router from "@/router";
-import cache from "@/utils/cache";
 import type { RouteRecordRaw } from "vue-router";
-import type { IUserType } from "./types";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -12,7 +9,30 @@ const routes: RouteRecordRaw[] = [
       {
         path: "/user",
         name: "user",
+        redirect: "/user/info",
         component: () => import("@/views/user/index.vue"),
+        children: [
+          {
+            path: "info",
+            name: "info",
+            component: () => import("@/views/user/views/info/index.vue"),
+          },
+          {
+            path: "address",
+            name: "address",
+            component: () => import("@/views/user/views/address/index.vue"),
+          },
+          {
+            path: "collect",
+            name: "collect",
+            component: () => import("@/views/user/views/collect/index.vue"),
+          },
+          {
+            path: "order",
+            name: "order",
+            component: () => import("@/views/user/views/order/index.vue"),
+          },
+        ],
       },
     ],
   },
@@ -20,13 +40,6 @@ const routes: RouteRecordRaw[] = [
     path: "/login",
     name: "login",
     component: () => import("@/views/login/index.vue"),
-    beforeEnter: (to, from) => {
-      const user = cache.getCache("user");
-      if ((user as IUserType).username.length) {
-        router.replace(from.path);
-        return false;
-      } else return true;
-    },
   },
   {
     path: "/register",

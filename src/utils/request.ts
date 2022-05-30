@@ -1,4 +1,6 @@
+import cache from "@/utils/cache";
 import axios from "axios";
+import type { IUserInfo } from "./types";
 
 const instance = axios.create({
   baseURL: "/api",
@@ -7,6 +9,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
+    const user = cache.getCache("user") as IUserInfo;
+    // 携带token
+    if (user.token && config.headers)
+      config.headers["Authorization"] = "Bearer " + user.token;
     return config;
   },
   (errors) => {

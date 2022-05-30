@@ -1,18 +1,16 @@
 import type { FormItemRule, FormRules } from "naive-ui";
 
 export const rules: FormRules = {
-  username: [
-    {
-      required: true,
-      validator(rule: FormItemRule, value: string) {
-        if (!value) {
-          return new Error("用户名不能为空");
-        }
-        return true;
-      },
-      trigger: ["input", "blur"],
+  username: {
+    required: true,
+    validator(rule: FormItemRule, value: string) {
+      if (!value) {
+        return new Error("用户名不能为空");
+      }
+      return true;
     },
-  ],
+    trigger: ["input", "blur"],
+  },
   password: {
     required: true,
     validator(rule: FormItemRule, value: string) {

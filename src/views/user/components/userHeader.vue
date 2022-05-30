@@ -15,7 +15,7 @@ header {
   display: flex;
   justify-content: start;
   align-items: center;
-  box-shadow: 0 5px 0 rgb(50, 50, 50);
+  box-shadow: 0 3px 0 rgba(50, 50, 50, 0.2);
   padding-left: 30px;
   img {
     width: 100px;

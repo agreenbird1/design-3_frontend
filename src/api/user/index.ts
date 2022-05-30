@@ -1,5 +1,5 @@
 import request from "../../utils/request";
-import type { IUserLogin, IUserRegister } from "./types";
+import type { IUserLogin, IUserRegister, IUserUpdate } from "./types";
 
 /**
  * 采用用户名方式登陆
@@ -17,4 +17,22 @@ export const userLogin = (user: IUserLogin) => {
  */
 export const register = (user: IUserRegister) => {
   return request("/user", "post", user);
+};
+
+/**
+ *
+ * @param avatar - 图片文件
+ * @returns 图片路径
+ */
+export const update_avatar = (avatar: FormData) => {
+  return request("/upload/avatar", "post", avatar);
+};
+
+/**
+ *
+ * @param user - 用户名、性别
+ * @returns
+ */
+export const update_user = (user: IUserUpdate) => {
+  return request("/user/update", "post", user);
 };

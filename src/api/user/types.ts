@@ -6,6 +6,11 @@ export interface IUserLogin {
 export interface IUserRegister {
   username: string;
   mobile: string;
-  gender: 0 | 1;
+  gender: string;
   password: string;
+}
+
+export interface IUserUpdate {
+  username: string;
+  gender: string;
 }

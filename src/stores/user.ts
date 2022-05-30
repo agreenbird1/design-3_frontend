@@ -1,4 +1,5 @@
-import { userLogin } from "@/api";
+import { update_avatar, update_user, userLogin } from "@/api";
+import type { IUserUpdate } from "@/api/user/types";
 import message from "@/components/Message";
 import type { FormInst } from "naive-ui";
 import { defineStore } from "pinia";
@@ -37,11 +38,15 @@ export const useUserStore = defineStore({
               if (res.status !== 200) {
                 message("error", res.data);
               } else {
-                this.avatar = res.data.avatar;
-                this.username = res.data.username;
-                this.id = res.data.id;
-                this.gender = res.data.gender;
-                this.mobile = res.data.mobile;
+                console.log(res);
+                this.$patch({
+                  id: res.data.id,
+                  gender: res.data.gender,
+                  mobile: res.data.mobile,
+                  username: res.data.username,
+                  avatar: res.data.avatar,
+                  token: res.data.token,
+                });
                 message("success", "登陆成功");
                 router.push("/");
               }
@@ -49,6 +54,26 @@ export const useUserStore = defineStore({
           }
         });
       }
+    },
+    updateAvatar(formData: FormData) {
+      update_avatar(formData).then((res) => {
+        if (res.status !== 200) {
+          message("error", "上传头像失败!");
+        } else {
+          this.avatar = "";
+          this.$patch({
+            avatar: res.data,
+          });
+          message("success", "上传头像成功！");
+        }
+      });
+    },
+    updateUser(user: IUserUpdate) {
+      update_user(user).then((res) => {
+        if (res.status !== 200) {
+          message("error", "保存失败！");
+        } else message("success", "保存成功！");
+      });
     },
   },
   // 开启持久化

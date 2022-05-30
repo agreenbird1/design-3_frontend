@@ -27,12 +27,14 @@
 </template>
 
 <script setup lang="ts">
+import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import { RouterLink } from "vue-router";
+
 const userStore = useUserStore();
 const logout = () => {
   userStore.$reset();
-  console.log(userStore);
+  router.push("/");
 };
 </script>
 
