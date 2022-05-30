@@ -2,12 +2,18 @@
   <nav class="app-nav">
     <div class="container">
       <ul>
-        <li>
-          <RouterLink to="/login">请先登录</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/register">免费注册</RouterLink>
-        </li>
+        <template v-if="userStore.token">
+          <li><RouterLink to="/login">请先登录</RouterLink></li>
+          <li>
+            <RouterLink to="/register">免费注册</RouterLink>
+          </li>
+        </template>
+        <template v-else>
+          <li>
+            <a href="javascript:;">欢迎，{{ userStore.username }}</a>
+          </li>
+        </template>
+
         <li><a href="javascript:;">我的订单</a></li>
         <li><a href="javascript:;">会员中心</a></li>
       </ul>
@@ -16,7 +22,9 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from "@/stores/user";
 import { RouterLink } from "vue-router";
+const userStore = useUserStore();
 </script>
 
 <style scoped lang="less">

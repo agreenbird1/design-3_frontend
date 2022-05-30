@@ -1,15 +1,14 @@
 <template>
   <transition name="down">
     <div class="xtx-message" :style="style[type]" v-show="show">
-      <!-- 上面绑定的是样式 -->
-      <!-- 不同提示图标会变 -->
-      <i class="iconfont" :class="[style[type].icon]"></i>
+      <component :is="style[type].icon"></component>
       <span class="text">{{ text }}</span>
     </div>
   </transition>
 </template>
 <script>
 import { ref, onMounted } from "vue";
+import { CloseOutlined, CheckOutlined } from "@vicons/antd";
 export default {
   name: "XtxMessage",
   props: {
@@ -23,23 +22,27 @@ export default {
       default: "warn",
     },
   },
+  components: {
+    CloseOutlined,
+    CheckOutlined,
+  },
   setup() {
     // 定义一个对象，包含三种情况的样式，对象key就是类型字符串
     const style = {
       warn: {
-        icon: "icon-warning",
+        icon: "CloseOutlined",
         color: "#E6A23C",
         backgroundColor: "rgb(253, 246, 236)",
         borderColor: "rgb(250, 236, 216)",
       },
       error: {
-        icon: "icon-shanchu",
+        icon: "CloseOutlined",
         color: "#F56C6C",
         backgroundColor: "rgb(254, 240, 240)",
         borderColor: "rgb(253, 226, 226)",
       },
       success: {
-        icon: "icon-queren2",
+        icon: "CheckOutlined",
         color: "#67C23A",
         backgroundColor: "rgb(240, 249, 235)",
         borderColor: "rgb(225, 243, 216)",
@@ -70,6 +73,7 @@ export default {
   }
 }
 .xtx-message {
+  display: flex;
   width: 300px;
   height: 50px;
   position: fixed;

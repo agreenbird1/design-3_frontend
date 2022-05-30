@@ -2,6 +2,7 @@ import { userLogin } from "@/api";
 import message from "@/components/Message";
 import type { FormInst } from "naive-ui";
 import { defineStore } from "pinia";
+import router from "../router";
 import type { ILoginType } from "../views/login/types";
 
 export const useUserStore = defineStore({
@@ -42,6 +43,7 @@ export const useUserStore = defineStore({
                 this.gender = res.data.gender;
                 this.mobile = res.data.mobile;
                 message("success", "登陆成功");
+                router.push("/");
               }
             });
           }
@@ -58,3 +60,11 @@ export const useUserStore = defineStore({
     ],
   },
 });
+
+// persistence 已经帮助初始化和持久化
+// export const initUserStore = () => {
+//   const userStore = useUserStore();
+//   userStore.$patch((state) => {
+//     console.log(state);
+//   });
+// };

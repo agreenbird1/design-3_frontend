@@ -133,6 +133,7 @@ const login = () => {
   }
 
   .login-input {
+    position: relative;
     padding: 20px;
 
     .login-button {

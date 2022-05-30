@@ -12,5 +12,4 @@ pinia.use(piniaPluginPersist);
 app.use(pinia);
 app.use(router);
 app.component("message", Message);
-
 app.mount("#app");

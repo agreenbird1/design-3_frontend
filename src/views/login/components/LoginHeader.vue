@@ -4,7 +4,7 @@
       <h1 class="logo">
         <RouterLink to="/">随心选</RouterLink>
       </h1>
-      <h3 class="sub">欢迎登陆</h3>
+      <h3 class="sub">{{ props.name }}</h3>
       <RouterLink class="entry" to="/">
         进入网站首页 <DoubleRightOutlined />
       </RouterLink>
@@ -15,6 +15,12 @@
 <script setup lang="ts">
 import { DoubleRightOutlined } from "@vicons/antd";
 import { RouterLink } from "vue-router";
+const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
+});
 </script>
 
 <style scoped lang="less">

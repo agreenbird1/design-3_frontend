@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <LoginHeader />
+    <LoginHeader name="欢迎登陆" />
     <section class="login-section">
       <div class="login-container">
         <LoginPanel />
