@@ -2,7 +2,7 @@
   <nav class="app-nav">
     <div class="container">
       <ul>
-        <template v-if="userStore.token">
+        <template v-if="!userStore.id">
           <li><RouterLink to="/login">请先登录</RouterLink></li>
           <li>
             <RouterLink to="/register">免费注册</RouterLink>
@@ -12,10 +12,15 @@
           <li>
             <a href="javascript:;">欢迎，{{ userStore.username }}</a>
           </li>
+          <li>
+            <a href="javascript:;" @click="logout">退出登陆</a>
+          </li>
         </template>
 
         <li><a href="javascript:;">我的订单</a></li>
-        <li><a href="javascript:;">会员中心</a></li>
+        <li>
+          <RouterLink to="/user">会员中心</RouterLink>
+        </li>
       </ul>
     </div>
   </nav>
@@ -25,6 +30,10 @@
 import { useUserStore } from "@/stores/user";
 import { RouterLink } from "vue-router";
 const userStore = useUserStore();
+const logout = () => {
+  userStore.$reset();
+  console.log(userStore);
+};
 </script>
 
 <style scoped lang="less">

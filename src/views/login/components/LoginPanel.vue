@@ -114,7 +114,7 @@ const login = () => {
   background-color: #fff;
   padding-top: 20px;
   border: 3px solid rgb(240, 236, 236);
-  box-shadow: 3px 3px 3px rgb(240, 236, 236);
+  box-shadow: 0 0 8px rgb(0, 0, 0, 0.6);
 
   .login-method {
     display: flex;

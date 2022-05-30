@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AppFooter: typeof import('./src/components/AppFooter.vue')['default']
     AppNav: typeof import('./src/components/AppNav.vue')['default']
     Content: typeof import('./src/components/Content.vue')['default']
     Message: typeof import('./src/components/Message.vue')['default']

@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import AppFooter from "@/components/AppFooter.vue";
 import AppNav from "@/components/AppNav.vue";
 </script>
 
 <template>
   <div class="layout">
     <AppNav />
-    layout
+    <router-view></router-view>
+    <AppFooter />
   </div>
 </template>
 
