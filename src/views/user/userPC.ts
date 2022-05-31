@@ -1,4 +1,4 @@
-import type { ITitleType } from "../types";
+import type { ITitleType } from "./types";
 
 export const userPCTitles: ITitleType[] = [
   {

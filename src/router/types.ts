@@ -5,4 +5,5 @@ export interface IUserType {
   password: string;
   repassword: string;
   code: string;
+  token: string;
 }

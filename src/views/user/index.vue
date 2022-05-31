@@ -14,16 +14,18 @@
           </router-link>
         </n-anchor>
       </aside>
-      <section>
-        <router-view></router-view>
-      </section>
+      <n-dialog-provider>
+        <section>
+          <router-view></router-view>
+        </section>
+      </n-dialog-provider>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import userHeader from "./components/userHeader.vue";
-import { userPCTitles } from "./tools/userPC";
+import { userPCTitles } from "./userPC";
 </script>
 
 <style scoped lang="less">

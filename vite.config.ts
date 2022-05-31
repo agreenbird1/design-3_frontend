@@ -39,6 +39,14 @@ export default defineConfig({
           return path.replace(/^\/api/, "");
         },
       },
+      "/code": {
+        target: "https://106.ihuyi.com/webservice/sms.php",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => {
+          return path.replace(/^\/code/, "");
+        },
+      },
     },
   },
 });

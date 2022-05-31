@@ -1,4 +1,7 @@
+import message from "@/components/Message";
+import cache from "@/utils/cache";
 import type { RouteRecordRaw } from "vue-router";
+import type { IUserType } from "./types";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -33,6 +36,14 @@ const routes: RouteRecordRaw[] = [
             component: () => import("@/views/user/views/order/index.vue"),
           },
         ],
+        beforeEnter() {
+          const user = cache.getCache("user") as IUserType;
+          if (user.token) return true;
+          else {
+            message("warn", "请先登陆！");
+            return false;
+          }
+        },
       },
     ],
   },

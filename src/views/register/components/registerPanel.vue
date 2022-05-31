@@ -80,7 +80,7 @@ import message from "@/components/Message";
 import router from "@/router";
 import type { FormInst } from "naive-ui";
 import { ref } from "vue";
-import { modelRef, rules } from "../tools/register";
+import { modelRef, rules } from "../register";
 
 const mobileFormRef = ref<FormInst | null>(null);
 const register = () => {

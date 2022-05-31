@@ -20,7 +20,7 @@
         >
           <n-form-item path="mobile" label="手机号">
             <n-input
-              v-model:value="modelRef.username"
+              v-model:value="modelRef.mobile"
               placeholder="请输入手机号"
               :input-props="{ autocomplete: 'off' }"
               @keydown.enter.prevent
@@ -28,12 +28,14 @@
           </n-form-item>
           <n-form-item path="验证码">
             <n-input-group>
-              <n-button strong secondary type="tertiary"> 获取验证码 </n-button>
+              <n-button strong secondary type="tertiary" @click="sendCode">
+                获取验证码
+              </n-button>
               <n-input
-                v-model:value="modelRef.password"
+                v-model:value="modelRef.code"
                 placeholder="请输入短信验证码"
                 :input-props="{ autocomplete: 'off' }"
-                type="password"
+                type="text"
                 @keydown.enter.prevent
                 :style="{ width: '100%' }"
               />
@@ -74,10 +76,12 @@
 </template>
 
 <script setup lang="ts">
+import { sendCode as sendCodeSer } from "@/api";
 import { useUserStore } from "@/stores/user";
+import { generateCode } from "@/utils/generateCode";
 import type { FormInst } from "naive-ui";
 import { ref } from "vue";
-import { rules } from "../tools/login";
+import { rules } from "../login";
 import type { ILoginType } from "../types";
 
 const isMobile = ref(false);
@@ -86,7 +90,8 @@ const userFormRef = ref<FormInst | null>(null);
 const modelRef = ref<ILoginType>({
   username: "tqt",
   password: "roletang",
-  mobile: "",
+  mobile: "17623352392",
+  code: "",
 });
 const userStore = useUserStore();
 
@@ -98,12 +103,21 @@ const changeMethod = (flag: boolean) => {
 };
 // 点击登陆
 const login = () => {
+  console.log(modelRef.value);
   userStore.getUser(
     isMobile.value,
     mobileFormRef.value,
     userFormRef.value,
     modelRef.value
   );
+};
+
+let code = generateCode();
+// 获取验证码
+const sendCode = () => {
+  sendCodeSer(modelRef.value.mobile as string, code).then((res) => {
+    console.log(res);
+  });
 };
 </script>
 

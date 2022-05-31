@@ -1,10 +1,10 @@
 import type { FormItemRule, FormRules } from "naive-ui";
 import { ref } from "vue";
-import type { IRegisterType } from "../types";
+import type { IRegisterType } from "./types";
 
 export const modelRef = ref<IRegisterType>({
   username: "tx",
-  gender: 1,
+  gender: "1",
   password: "123123",
   repassword: "123123",
   mobile: "18888888888",

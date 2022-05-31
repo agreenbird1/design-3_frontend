@@ -1,7 +1,7 @@
 export interface IRegisterType {
   username: string;
   mobile: string;
-  gender: 0 | 1;
+  gender: string;
   password: string;
   repassword: string;
   code: string;
