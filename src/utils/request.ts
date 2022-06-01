@@ -30,7 +30,7 @@ instance.interceptors.response.use(
   }
 );
 
-export default (url: string, method: string, reqData: unknown) => {
+export default (url: string, method: string, reqData?: unknown) => {
   return instance({
     url,
     method,
