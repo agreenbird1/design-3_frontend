@@ -69,10 +69,16 @@ export const useUserStore = defineStore({
       });
     },
     updateUser(user: IUserUpdate) {
+      console.log(user);
       update_user(user).then((res) => {
+        console.log(res);
         if (res.status !== 200) {
-          message("error", "保存失败！");
-        } else message("success", "保存成功！");
+          message("error", res.data);
+        } else {
+          this.username = user.username;
+          this.gender = user.gender;
+          message("success", "保存成功！");
+        }
       });
     },
   },
@@ -85,11 +91,3 @@ export const useUserStore = defineStore({
     ],
   },
 });
-
-// persistence 已经帮助初始化和持久化
-// export const initUserStore = () => {
-//   const userStore = useUserStore();
-//   userStore.$patch((state) => {
-//     console.log(state);
-//   });
-// };

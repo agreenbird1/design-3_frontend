@@ -4,6 +4,7 @@ import {
   getAddresses as getAddressesApi,
   updateAddresses,
 } from "@/api";
+import message from "@/components/Message";
 import { modifyMobile } from "@/utils/modifyMobile";
 import type {
   CascaderOption,
@@ -229,6 +230,7 @@ export const upAddress = () => {
       id: rowId,
       ...formValue.value,
     });
+    message("success", "更新成功！");
     if (formValue.value.isDefault === "1" && addresses.value) {
       let defaultAd;
       addresses.value.forEach((address, idx) => {
@@ -241,10 +243,18 @@ export const upAddress = () => {
         }
       });
     }
+    const cur = addresses.value?.find((address) => address.id === rowId);
+    if (cur) {
+      cur.detailAddress = formValue.value.detailAddress;
+      cur.value = formValue.value.value;
+      cur.receiver = formValue.value.receiver;
+      cur.mobile = formValue.value.mobile;
+      cur.isDefault = formValue.value.isDefault;
+    }
   } else {
     addAddress(formValue.value).then((res) => {
       // 始终保持默认地址在第一个
-      if (formValue.value.isDefault === "1" && addresses.value) {
+      if (formValue.value.isDefault === "1" && addresses.value?.length) {
         addresses.value[0].isDefault = "0";
         addresses.value?.unshift({
           id: res.data,
@@ -256,6 +266,7 @@ export const upAddress = () => {
           ...formValue.value,
         });
       }
+      message("success", "添加成功！");
     });
   }
   isOpenPanel.value = false;

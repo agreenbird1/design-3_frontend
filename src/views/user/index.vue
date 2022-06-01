@@ -31,7 +31,7 @@ import { userPCTitles } from "./userPC";
 <style scoped lang="less">
 .user {
   .user-container {
-    padding-top: 40px;
+    padding-top: 20px;
     display: flex;
     justify-content: center;
     background-color: #f5f5f5;
