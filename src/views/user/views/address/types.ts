@@ -1,8 +1,9 @@
 export interface IAddress {
-  value: string | null;
+  value: string;
   detailAddress: string;
   receiver: string;
   mobile: string;
+  isDefault: string;
 }
 
 export interface IAddressT {

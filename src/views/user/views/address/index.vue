@@ -8,24 +8,56 @@
     </template>
     <template v-else>
       <div class="user-title">
-        <span>收货地址</span>
-        <span>+收货地址</span>
+        <span></span>
+        <span @click="openPanel">+收货地址</span>
       </div>
-      <n-data-table :columns="columns" :data="addresses" :bordered="false" />
+      <n-data-table
+        :pagination="{
+          pageSize: 6,
+        }"
+        :columns="columns"
+        :data="addresses"
+        :bordered="false"
+      />
     </template>
   </div>
 
-  <n-drawer v-model:show="isOpenPanel" :height="502" placement="bottom">
+  <n-drawer
+    v-model:show="isOpenPanel"
+    :height="502"
+    placement="bottom"
+    bordered
+  >
     <n-drawer-content>
-      <template #header> 新建收货地址 </template>
+      <template #header> {{ isUpdated ? "更新" : "创建" }}收货地址 </template>
       <template #footer>
-        <n-button strong secondary type="tertiary" @click="isOpenPanel = false">
-          取消
-        </n-button>
-        &nbsp; &nbsp; &nbsp;
-        <n-button strong secondary type="warning" @click="upAddress">
-          确认创建
-        </n-button>
+        <div class="drawer-footer">
+          <n-checkbox
+            size="medium"
+            label="设置为默认地址"
+            :checked="formValue.isDefault === '1'"
+            @update:checked="handleCheckedChange"
+          />
+          <div class="drawer-button">
+            <n-button
+              strong
+              secondary
+              type="tertiary"
+              @click="isOpenPanel = false"
+            >
+              取消
+            </n-button>
+            &nbsp; &nbsp; &nbsp;
+            <n-button
+              strong
+              secondary
+              type="warning"
+              @click="handlePanelChange"
+            >
+              确认{{ isUpdated ? "更新" : "创建" }}
+            </n-button>
+          </div>
+        </div>
       </template>
       <n-form
         ref="formRef"
@@ -68,27 +100,33 @@
 </template>
 
 <script setup lang="ts">
-import type { FormInst } from "naive-ui";
 import { NButton } from "naive-ui";
-import { ref } from "vue";
-import { addresses, columns, rules } from "./address";
+import {
+  addresses,
+  columns,
+  formRef,
+  formValue,
+  isOpenPanel,
+  isUpdated,
+  resetForm,
+  rules,
+  upAddress,
+} from "./address";
 import { options } from "./assets/addressInfo";
-import type { IAddress } from "./types";
 
-const isOpenPanel = ref(false);
+const handleCheckedChange = (checked: boolean) => {
+  if (checked) formValue.value.isDefault = "1";
+  else formValue.value.isDefault = "0";
+};
+
 const openPanel = () => {
   isOpenPanel.value = true;
+  isUpdated.value = false;
+  resetForm();
 };
-const formRef = ref<FormInst | null>(null);
-const formValue = ref<IAddress>({
-  detailAddress: "",
-  value: null,
-  receiver: "",
-  mobile: "",
-});
 
-const upAddress = () => {
-  console.log(formValue.value);
+const handlePanelChange = () => {
+  upAddress();
 };
 </script>
 
@@ -100,7 +138,7 @@ const upAddress = () => {
     justify-content: space-between;
     align-items: center;
     height: 30px;
-    padding: 10px;
+    padding-top: 20px;
     padding-right: 60px;
     padding-bottom: 20px;
     & span:last-child {
@@ -123,5 +161,11 @@ const upAddress = () => {
       cursor: pointer;
     }
   }
+}
+.drawer-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 </style>

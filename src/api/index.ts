@@ -1,6 +1,11 @@
 import axios from "axios";
 
-export { getAddresses } from "./address";
+export {
+  addAddress,
+  deleteAddress,
+  getAddresses,
+  updateAddresses,
+} from "./address";
 export { register, update_avatar, update_user, userLogin } from "./user";
 
 export const sendCode = (mobile: string, code: string) => {

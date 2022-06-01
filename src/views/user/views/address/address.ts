@@ -1,17 +1,24 @@
-import { getAddresses as getAddressesApi } from "@/api";
+import {
+  addAddress,
+  deleteAddress,
+  getAddresses as getAddressesApi,
+  updateAddresses,
+} from "@/api";
 import { modifyMobile } from "@/utils/modifyMobile";
 import type {
   CascaderOption,
   DataTableColumns,
+  FormInst,
   FormItemRule,
   FormRules,
 } from "naive-ui";
 import { NButton, NCascader } from "naive-ui";
 import { h, ref } from "vue";
 import { options } from "./assets/addressInfo";
-import type { IAddressRes, IAddressResponse } from "./types";
+import type { IAddress, IAddressRes, IAddressResponse } from "./types";
 
-export const addresses = ref<IAddressRes[] | null>();
+let rowId = "";
+export const addresses = ref<IAddressRes[] | null>(null);
 
 export const rules: FormRules = {
   receiver: {
@@ -50,7 +57,7 @@ export const rules: FormRules = {
     required: true,
     validator(rule: FormItemRule, value: string) {
       if (!value) {
-        return new Error("详细地址不能为空！");
+        return new Error("地区不能为空！");
       }
       return true;
     },
@@ -58,9 +65,19 @@ export const rules: FormRules = {
   },
 };
 
-const createColumns = (
-  play: (row: IAddressRes) => void
-): DataTableColumns<IAddressRes> => [
+export const isUpdated = ref(false);
+export const isOpenPanel = ref(false);
+export const formRef = ref<FormInst | null>(null);
+
+export const formValue = ref<IAddress>({
+  detailAddress: "",
+  value: "",
+  receiver: "",
+  mobile: "",
+  isDefault: "0",
+});
+
+const createColumns = (): DataTableColumns<IAddressRes> => [
   {
     title: "收货人",
     key: "receiver",
@@ -73,6 +90,11 @@ const createColumns = (
         value: row.value,
         options: options as CascaderOption[],
         checkStrategy: "child",
+        onUpdateValue: (value) => {
+          row.value = value;
+          // 更改时候直接更新数据库
+          updateAddresses(row);
+        },
       });
     },
   },
@@ -102,7 +124,12 @@ const createColumns = (
             style: {
               marginRight: "10px",
             },
-            onClick: () => play(row),
+            onClick: () => {
+              isOpenPanel.value = true;
+              isUpdated.value = true;
+              formValue.value = { ...row };
+              rowId = row.id;
+            },
           },
           { default: () => "编辑" }
         ),
@@ -114,7 +141,14 @@ const createColumns = (
             type: "error",
             size: "small",
 
-            onClick: () => play(row),
+            onClick: () => {
+              deleteAddress(row.id);
+              addresses.value?.forEach((address, idx) => {
+                if (address.id === row.id) {
+                  addresses.value?.splice(idx, 1);
+                }
+              });
+            },
           },
           { default: () => "删除" }
         ),
@@ -148,6 +182,13 @@ const createColumns = (
                 cursor: "pointer",
                 textDecoration: "underline",
               },
+              onClick: () => {
+                row.isDefault = "1";
+                formValue.value = { ...row };
+                rowId = row.id;
+                isUpdated.value = true;
+                upAddress();
+              },
             },
             { default: () => "设为默认地址" }
           ),
@@ -157,13 +198,15 @@ const createColumns = (
   },
 ];
 
-export const columns = createColumns((row) => {
-  console.log(row);
-});
+export const columns = createColumns();
 
 const getAddresses = async (): Promise<IAddressRes[]> => {
   const res = await getAddressesApi();
-  return res.data.map((address: IAddressResponse) => {
+  let defaultIdx = 0;
+  res.data = res.data.map((address: IAddressResponse, index: number) => {
+    if (address.isDefault === "1") {
+      defaultIdx = index;
+    }
     const v = address.value.split("|");
     return {
       id: address.id,
@@ -174,6 +217,58 @@ const getAddresses = async (): Promise<IAddressRes[]> => {
       detailAddress: v[1],
     };
   });
+
+  defaultIdx && res.data.unshift(res.data.splice(defaultIdx, 1)[0]);
+
+  return res.data;
+};
+
+export const upAddress = () => {
+  if (isUpdated.value) {
+    updateAddresses({
+      id: rowId,
+      ...formValue.value,
+    });
+    if (formValue.value.isDefault === "1" && addresses.value) {
+      let defaultAd;
+      addresses.value.forEach((address, idx) => {
+        if (address.id !== rowId) address.isDefault = "0";
+        else {
+          address.isDefault = "1";
+          defaultAd = address;
+          addresses.value?.splice(idx, 1);
+          addresses.value?.unshift(defaultAd);
+        }
+      });
+    }
+  } else {
+    addAddress(formValue.value).then((res) => {
+      // 始终保持默认地址在第一个
+      if (formValue.value.isDefault === "1" && addresses.value) {
+        addresses.value[0].isDefault = "0";
+        addresses.value?.unshift({
+          id: res.data,
+          ...formValue.value,
+        });
+      } else {
+        addresses.value?.push({
+          id: res.data,
+          ...formValue.value,
+        });
+      }
+    });
+  }
+  isOpenPanel.value = false;
+};
+
+export const resetForm = () => {
+  formValue.value = {
+    detailAddress: "",
+    value: "",
+    receiver: "",
+    mobile: "",
+    isDefault: "0",
+  };
 };
 
 addresses.value = await getAddresses();
