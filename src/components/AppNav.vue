@@ -17,7 +17,9 @@
           </li>
         </template>
 
-        <li><a href="javascript:;">我的订单</a></li>
+        <li>
+          <RouterLink to="/user/order">订单管理</RouterLink>
+        </li>
         <li>
           <RouterLink to="/user">会员中心</RouterLink>
         </li>

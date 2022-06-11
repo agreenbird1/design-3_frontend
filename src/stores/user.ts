@@ -38,7 +38,6 @@ export const useUserStore = defineStore({
               if (res.status !== 200) {
                 message("error", res.data);
               } else {
-                console.log(res);
                 this.$patch({
                   id: res.data.id,
                   gender: res.data.gender,

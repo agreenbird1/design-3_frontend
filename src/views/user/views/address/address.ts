@@ -204,6 +204,7 @@ export const columns = createColumns();
 const getAddresses = async (): Promise<IAddressRes[]> => {
   const res = await getAddressesApi();
   let defaultIdx = 0;
+  console.log(res);
   res.data = res.data.map((address: IAddressResponse, index: number) => {
     if (address.isDefault === "1") {
       defaultIdx = index;

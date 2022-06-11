@@ -81,6 +81,7 @@ const upload = (e: Event) => {
   const input = e.target as HTMLInputElement;
   const formData = new FormData();
   if (input.files) {
+    console.log(input.files[0]);
     formData.set("avatar", input.files[0]);
     userStore.updateAvatar(formData);
   }

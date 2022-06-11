@@ -103,7 +103,6 @@ const changeMethod = (flag: boolean) => {
 };
 // 点击登陆
 const login = () => {
-  console.log(modelRef.value);
   userStore.getUser(
     isMobile.value,
     mobileFormRef.value,

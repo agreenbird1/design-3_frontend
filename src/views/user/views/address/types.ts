@@ -12,13 +12,8 @@ export interface IAddressT {
   children?: IAddressT[];
 }
 
-export interface IAddressRes {
+export interface IAddressRes extends IAddress {
   id: string;
-  value: string;
-  detailAddress: string;
-  receiver: string;
-  mobile: string;
-  isDefault: string;
 }
 
 export interface IAddressResponse {

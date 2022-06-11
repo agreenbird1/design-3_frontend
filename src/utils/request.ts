@@ -11,7 +11,7 @@ instance.interceptors.request.use(
   (config) => {
     const user = cache.getCache("user") as IUserInfo;
     // 携带token
-    if (user.token && config.headers)
+    if (user && user.token && config.headers)
       config.headers["Authorization"] = "Bearer " + user.token;
     return config;
   },
