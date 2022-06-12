@@ -8,6 +8,8 @@ export {
 } from "./address";
 export { register, update_avatar, update_user, userLogin } from "./user";
 
+export { getAssociateList } from "./home";
+
 export const sendCode = (mobile: string, code: string) => {
   return axios.get("/code", {
     params: {
