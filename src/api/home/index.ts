@@ -8,3 +8,7 @@ import request from "../../utils/request";
 export const getAssociateList = (keywords: string) => {
   return request("/product/associate", "get", { keywords });
 };
+
+export const getCategory = () => {
+  return request("/category", "get");
+};

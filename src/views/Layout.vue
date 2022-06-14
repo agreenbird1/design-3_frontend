@@ -9,6 +9,7 @@ import AppNav from "@/components/AppNav.vue";
     <router-view></router-view>
     <AppFooter />
   </div>
+  <n-back-top :right="100" />
 </template>
 
 <style scoped lang="less"></style>
