@@ -44,6 +44,7 @@ declare module '@vue/runtime-core' {
     NTooltip: typeof import('naive-ui')['NTooltip']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StickyNav: typeof import('./src/components/StickyNav.vue')['default']
     SxxGoods: typeof import('./src/components/SxxGoods.vue')['default']
   }
 }

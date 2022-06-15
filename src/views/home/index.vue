@@ -19,7 +19,7 @@
             <!-- 统一通过一个category路由组件 -->
             <!-- 通过不同的category类别搜索不同的商品 -->
             <li v-for="(category, idx) in categories" :key="idx">
-              <router-link :to="'category/' + category.value">
+              <router-link :to="'/category/' + category.value">
                 {{ category.category }}
                 <span v-for="(c, i) in category.children" :key="i"
                   >{{ c + (i === category.children.length - 1 ? "" : " / ") }}
@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import Search from "./components/Search.vue";
-import StickyNav from "./components/StickyNav.vue";
+import StickyNav from "@/components/StickyNav.vue";
 import Recommend from "./components/Recommend.vue";
 import { AndroidFilled, MobileFilled } from "@vicons/antd";
 import { getCategory, getGoods } from "@/api";

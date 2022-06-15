@@ -1,7 +1,7 @@
 <template>
   <div class="sxx-goods">
     <n-card hoverable>
-      <n-image width="200" :src="goods.pics[0]" />
+      <n-image width="200" :src="goods.pics[0]" preview-disabled />
       <div class="goods-name">{{ goods.name }}</div>
       <div class="goods-description">{{ goods.description }}</div>
       <div class="goods-price">￥{{ goods.price }}</div>

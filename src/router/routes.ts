@@ -50,6 +50,11 @@ const routes: RouteRecordRaw[] = [
           }
         },
       },
+      {
+        path: "/category/:category_id",
+        name: "category",
+        component: () => import("@/views/category/index.vue"),
+      },
     ],
   },
   {

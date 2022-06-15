@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import search from "./Search.vue";
+import search from "../views/home/components/Search.vue";
 import { useWindowScroll } from "@vueuse/core";
 
 const { y } = useWindowScroll();

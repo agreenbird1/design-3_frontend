@@ -12,3 +12,7 @@ export const getAssociateList = (keywords: string) => {
 export const getCategory = () => {
   return request("/category", "get");
 };
+
+export const getGoodsBySubcategory = (subcategory: string) => {
+  return request("/product/subCategory", "get", { subcategory });
+};
