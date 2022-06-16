@@ -3,7 +3,7 @@
     <div class="title">- {{ subCategory }} -</div>
     <router-link
       v-if="goodsList"
-      :to="'/category/sub/' + goodsList[0].category_id"
+      :to="'/subcategory/' + goodsList[0].category_id"
       >查看全部</router-link
     >
     <div class="goodsList">

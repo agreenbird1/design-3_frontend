@@ -16,3 +16,7 @@ export const getCategory = () => {
 export const getGoodsBySubcategory = (subcategory: string) => {
   return request("/product/subCategory", "get", { subcategory });
 };
+
+export const getGoodsBySubcategoryId = (subcategoryId: string) => {
+  return request("/product/category/" + subcategoryId, "get");
+};
