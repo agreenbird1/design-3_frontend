@@ -6,6 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppFooter: typeof import('./src/components/AppFooter.vue')['default']
+    AppHeader: typeof import('./src/components/AppHeader.vue')['default']
     AppNav: typeof import('./src/components/AppNav.vue')['default']
     Content: typeof import('./src/components/Content.vue')['default']
     Message: typeof import('./src/components/Message.vue')['default']
@@ -42,8 +43,10 @@ declare module '@vue/runtime-core' {
     NTabs: typeof import('naive-ui')['NTabs']
     NTag: typeof import('naive-ui')['NTag']
     NTooltip: typeof import('naive-ui')['NTooltip']
+    NumBox: typeof import('./src/components/NumBox.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Search: typeof import('./src/components/Search.vue')['default']
     StickyNav: typeof import('./src/components/StickyNav.vue')['default']
     SxxGoods: typeof import('./src/components/SxxGoods.vue')['default']
   }

@@ -27,4 +27,9 @@ export const sendCode = (mobile: string, code: string) => {
   });
 };
 
-export { getRecommendGoods, getHotGoods, getGoods } from "./goods";
+export {
+  getRecommendGoods,
+  getHotGoods,
+  getGoods,
+  getGoodsById,
+} from "./goods";

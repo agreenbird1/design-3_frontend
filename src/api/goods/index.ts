@@ -11,3 +11,7 @@ export const getRecommendGoods = () => {
 export const getGoods = () => {
   return request("/product", "get");
 };
+
+export const getGoodsById = (id: string) => {
+  return request("/product/apro", "get", { id });
+};

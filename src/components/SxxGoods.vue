@@ -1,5 +1,5 @@
 <template>
-  <div class="sxx-goods">
+  <div class="sxx-goods" @click="goGoodsPage">
     <n-card hoverable>
       <n-image width="200" :src="goods.pics[0]" preview-disabled />
       <div class="goods-name">{{ goods.name }}</div>
@@ -12,12 +12,17 @@
 <script setup lang="ts">
 import type { IGoodsRes } from "@/views/home/types";
 import type { PropType } from "vue";
-defineProps({
+import router from "@/router";
+
+const props = defineProps({
   goods: {
     type: Object as PropType<IGoodsRes>,
     required: true,
   },
 });
+const goGoodsPage = () => {
+  router.push("/goods/" + props.goods.id);
+};
 </script>
 
 <style scoped lang="less">

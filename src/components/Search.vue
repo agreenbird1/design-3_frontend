@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { SearchOutlined } from "@vicons/antd";
-import type { IAssociation } from "./types";
+import type { IAssociation } from "@/views/home/components/types";
 import { ref, watch } from "vue";
 import { getAssociateList } from "@/api";
 import { debounce } from "lodash-es";

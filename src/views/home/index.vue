@@ -1,17 +1,5 @@
 <template>
-  <StickyNav />
   <div class="home">
-    <header class="home-header">
-      <div class="logo">
-        <router-link to="/">
-          <img src="@/assets/imgs/logo.png" />
-        </router-link>
-      </div>
-      <div class="home-search"><Search /></div>
-      <div class="ios-android">
-        <AndroidFilled />安卓 &nbsp; <MobileFilled />ios
-      </div>
-    </header>
     <div class="home-main">
       <div class="home-carousel">
         <aside>
@@ -50,10 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import Search from "./components/Search.vue";
-import StickyNav from "@/components/StickyNav.vue";
 import Recommend from "./components/Recommend.vue";
-import { AndroidFilled, MobileFilled } from "@vicons/antd";
 import { getCategory, getGoods } from "@/api";
 import type { ICategory, IGoodsRes } from "./types";
 import { ref } from "vue";
@@ -85,23 +70,6 @@ getGoods().then((res) => {
 <style scoped lang="less">
 .home {
   background-color: #f5f5f5;
-  .home-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 20px;
-    padding-left: 150px;
-    padding-right: 150px;
-    img {
-      width: 140px;
-    }
-    .ios-android {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      color: grey;
-    }
-  }
   .home-main {
     width: 100%;
     padding: 80px;
