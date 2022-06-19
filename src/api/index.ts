@@ -32,4 +32,8 @@ export {
   getHotGoods,
   getGoods,
   getGoodsById,
+  getCollection,
+  deleteCollection,
+  collectGoods,
+  addCart,
 } from "./goods";

@@ -61,10 +61,14 @@
         />
       </div>
       <div class="goods-cart">
-        <span class="cart"> 加入购物车</span>
-        <span class="coll" :class="{ 'coll-active': goods?.put }">
-          <HeartOutlined />&nbsp;收藏</span
+        <span class="cart" @click="addCart"> 加入购物车</span>
+        <span
+          class="coll"
+          @click="changeCollection"
+          :class="{ 'coll-active': collect }"
         >
+          <HeartOutlined />&nbsp;{{ collect ? "取消收藏" : "收藏" }}
+        </span>
       </div>
     </div>
   </div>
@@ -76,12 +80,22 @@ import NumBox from "@/components/NumBox.vue";
 import { HeartOutlined } from "@vicons/antd";
 import type { IGoodsRes } from "../home/types";
 import { ref } from "vue";
-import { getGoodsById } from "@/api";
+import { useUserStore } from "@/stores/user";
+import message from "@/components/Message";
+import {
+  getGoodsById,
+  getCollection,
+  collectGoods,
+  deleteCollection,
+  addCart as addCartSer,
+} from "@/api";
 
 const route = useRoute();
 const goods = ref<IGoodsRes>();
 const selectNum = ref(1);
 const curImg = ref(0);
+const collect = ref(false);
+const userStore = useUserStore();
 let properties: { p: string; c: string }[] = [];
 
 getGoodsById(route.params.goods_id as string).then((res) => {
@@ -94,7 +108,57 @@ getGoodsById(route.params.goods_id as string).then((res) => {
     });
   });
 });
-console.log();
+
+if (userStore.id) {
+  getCollection().then((res) => {
+    if (
+      res.data.length > 0 &&
+      res.data.find((c: IGoodsRes) => c.id === goods.value?.id)
+    ) {
+      collect.value = true;
+    }
+  });
+}
+
+const changeCollection = () => {
+  if (collect.value) {
+    deleteCollection(goods.value?.id as number).then((res) => {
+      if (res.status === 200) {
+        message("success", "取消收藏成功！");
+        collect.value = false;
+      } else {
+        message("error", "取消收藏失败！");
+      }
+    });
+  } else {
+    if (userStore.id) {
+      collectGoods(goods.value?.id as number).then((res) => {
+        if (res.status === 200) {
+          message("success", "收藏成功！");
+          collect.value = true;
+        } else {
+          message("error", "收藏失败！");
+        }
+      });
+    } else {
+      message("warning", "请先登录");
+    }
+  }
+};
+
+const addCart = () => {
+  if (userStore.id) {
+    addCartSer(goods.value?.id as number, selectNum.value).then((res) => {
+      if (res.status === 200) {
+        message("success", "添加成功！");
+      } else {
+        message("error", "添加失败！");
+      }
+    });
+  } else {
+    message("warning", "请先登陆！");
+  }
+};
 </script>
 
 <style scoped lang="less">
@@ -166,6 +230,9 @@ console.log();
       }
       .coll-active {
         background-color: @sxColor;
+        svg {
+          color: @priceColor;
+        }
       }
     }
     .g-service {
