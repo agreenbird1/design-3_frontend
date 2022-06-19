@@ -198,10 +198,15 @@ const addCart = () => {
       padding-left: 15px;
       color: rgb(124, 121, 121);
       span {
-        margin-left: 40px;
+        cursor: pointer;
+        margin-left: 30px;
         margin-top: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
         display: inline-block;
-        border: 1px solid #bbb;
+        border: 1px solid @sucColor;
       }
     }
     .goods-num {
