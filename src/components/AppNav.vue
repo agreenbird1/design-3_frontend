@@ -21,6 +21,9 @@
           <RouterLink to="/user/order">订单管理</RouterLink>
         </li>
         <li>
+          <RouterLink to="/user/cart">我的购物车</RouterLink>
+        </li>
+        <li>
           <RouterLink to="/user">会员中心</RouterLink>
         </li>
       </ul>

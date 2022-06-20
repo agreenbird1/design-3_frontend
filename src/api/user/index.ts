@@ -36,3 +36,11 @@ export const update_avatar = (avatar: FormData) => {
 export const update_user = (user: IUserUpdate) => {
   return request("/user/update", "post", user);
 };
+
+export const getCart = () => {
+  return request("/cart", "get");
+};
+
+export const deleteCart = (product_id: number) => {
+  return request("/cart", "delete", { product_id });
+};

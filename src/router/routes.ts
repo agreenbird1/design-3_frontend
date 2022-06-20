@@ -40,6 +40,11 @@ const routes: RouteRecordRaw[] = [
             name: "order",
             component: () => import("@/views/user/views/order/index.vue"),
           },
+          {
+            path: "cart",
+            name: "cart",
+            component: () => import("@/views/user/views/cart/index.vue"),
+          },
         ],
         beforeEnter() {
           const user = cache.getCache("user") as IUserType;

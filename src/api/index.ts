@@ -1,19 +1,9 @@
 import axios from "axios";
 
-export {
-  addAddress,
-  deleteAddress,
-  getAddresses,
-  updateAddresses,
-} from "./address";
-export { register, update_avatar, update_user, userLogin } from "./user";
+export * from "./address";
+export * from "./user";
 
-export {
-  getAssociateList,
-  getCategory,
-  getGoodsBySubcategory,
-  getGoodsBySubcategoryId,
-} from "./home";
+export * from "./home";
 
 export const sendCode = (mobile: string, code: string) => {
   return axios.get("/code", {
@@ -27,13 +17,4 @@ export const sendCode = (mobile: string, code: string) => {
   });
 };
 
-export {
-  getRecommendGoods,
-  getHotGoods,
-  getGoods,
-  getGoodsById,
-  getCollection,
-  deleteCollection,
-  collectGoods,
-  addCart,
-} from "./goods";
+export * from "./goods";

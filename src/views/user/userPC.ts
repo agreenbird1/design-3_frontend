@@ -14,6 +14,10 @@ export const userPCTitles: ITitleType[] = [
     to: "/user/collect",
   },
   {
+    title: "我的购物车",
+    to: "/user/cart",
+  },
+  {
     title: "订单管理",
     to: "/user/order",
   },

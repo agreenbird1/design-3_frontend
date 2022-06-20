@@ -43,14 +43,12 @@
         </dl>
       </div>
       <div class="goods-property">
-        <template v-if="properties && properties.length">
-          <div>
-            {{ properties[0].p }} <span>{{ properties[0].c }}</span>
-          </div>
-          <div>
-            {{ properties[1].p }} <span>{{ properties[1].c }}</span>
-          </div>
-        </template>
+        <div v-if="properties && properties[0] && properties[0].p">
+          {{ properties[0].p }} <span>{{ properties[0].c }}</span>
+        </div>
+        <div v-if="properties && properties[1] && properties[1].p">
+          {{ properties[1].p }} <span>{{ properties[1].c }}</span>
+        </div>
       </div>
       <div class="goods-num">
         <NumBox
