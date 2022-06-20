@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { getCart, deleteCart } from "@/api";
+import { getCart, deleteCart, addOrder as addOrderSer } from "@/api";
 import { ref, h, computed } from "vue";
 import { NButton, NImage } from "naive-ui";
 import message from "@/components/Message";
@@ -139,12 +139,18 @@ const total = computed(() => {
 });
 const addOrder = () => {
   if (!selectedGoods.value?.length) message("warn", "请至少选中一件商品");
-  router.push({
-    name: "order",
-    params: {
-      product_ids: selectedGoods.value?.map((goods) => goods.id),
-    },
-  });
+  else {
+    const product_ids = selectedGoods.value?.map((goods) => goods.id);
+    const number = selectedGoods.value?.map((goods) => goods.number);
+    addOrderSer(product_ids, number).then((res) => {
+      router.push({
+        path: "/payOrder",
+        query: {
+          order_id: res.data as number,
+        },
+      });
+    });
+  }
 };
 const deleteAll = () => {
   selectedGoods.value?.forEach((s) => deleteAGoods(s));
@@ -158,7 +164,6 @@ const deleteAGoods = (row: ICartRes) => {
 };
 getCart().then((res) => {
   cartGoods.value = res.data;
-  console.log(res.data);
 });
 </script>
 

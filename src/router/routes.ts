@@ -70,6 +70,11 @@ const routes: RouteRecordRaw[] = [
         name: "subcategory",
         component: () => import("@/views/subcategory/index.vue"),
       },
+      {
+        path: "/payOrder",
+        name: "payOrder",
+        component: () => import("@/views/payOrder/index.vue"),
+      },
     ],
   },
   {
