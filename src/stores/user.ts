@@ -1,9 +1,9 @@
-import { update_avatar, update_user, userLogin } from "@/api";
-import type { IUserUpdate } from "@/api/user/types";
-import message from "@/components/Message";
-import type { FormInst } from "naive-ui";
 import { defineStore } from "pinia";
 import router from "../router";
+import { update_avatar, update_user, userLogin } from "@/api";
+import message from "@/components/Message";
+import type { IUserUpdate } from "@/api/user/types";
+import type { FormInst } from "naive-ui";
 import type { ILoginType } from "../views/login/types";
 
 export const useUserStore = defineStore({
@@ -38,15 +38,13 @@ export const useUserStore = defineStore({
               if (res.status !== 200) {
                 message("error", res.data);
               } else {
-                this.$patch({
-                  id: res.data.id,
-                  gender: res.data.gender,
-                  mobile: res.data.mobile,
-                  username: res.data.username,
-                  avatar: res.data.avatar,
-                  token: res.data.token,
-                });
-                message("success", "登陆成功");
+                (this.id = res.data.id),
+                  (this.gender = res.data.gender),
+                  (this.mobile = res.data.mobile),
+                  (this.username = res.data.username),
+                  (this.avatar = res.data.avatar),
+                  (this.token = res.data.token),
+                  message("success", "登陆成功");
                 router.push("/");
               }
             });
@@ -83,10 +81,7 @@ export const useUserStore = defineStore({
   },
   // 开启持久化
   persist: {
-    enabled: true, // 启用
-    strategies: [
-      // storage 可选localStorage或sessionStorage
-      { key: "user", storage: localStorage },
-    ],
+    key: "store-key",
+    storage: window.localStorage,
   },
 });

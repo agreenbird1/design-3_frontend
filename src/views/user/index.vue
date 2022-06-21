@@ -5,14 +5,13 @@
       <aside>
         <n-anchor affix style="z-index: 1" ignore-gap>
           <n-anchor-link title="个人中心" class="first-link" />
-
-          <n-anchor-link
+          <router-link
             v-for="(title, index) in userPCTitles"
             :key="index"
-            class="link"
-            :title="title.title"
-            :href="title.to"
-          />
+            :to="title.to"
+          >
+            <n-anchor-link class="link" :title="title.title" />
+          </router-link>
         </n-anchor>
       </aside>
       <n-dialog-provider>

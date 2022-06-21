@@ -24,12 +24,12 @@
         </n-carousel>
       </div>
       <Recommend
-        :goodsList="goodsList"
+        :goodsList="recommendList"
         title="人气推荐"
         subTitle="超多好货，等你来选"
       />
       <Recommend
-        :goodsList="goodsList"
+        :goodsList="hotList"
         title="热卖商品"
         subTitle="爱你所爱，想你所想"
       />
@@ -39,12 +39,14 @@
 
 <script setup lang="ts">
 import Recommend from "./components/Recommend.vue";
-import { getCategory, getGoods } from "@/api";
+import { getCategory, getRecommendGoods, getGoods } from "@/api";
 import type { ICategory, IGoodsRes } from "./types";
 import { ref } from "vue";
 
 const categories = ref<ICategory[]>([]);
-const goodsList = ref<IGoodsRes[]>([]);
+const recommendList = ref<IGoodsRes[]>([]);
+const hotList = ref<IGoodsRes[]>([]);
+
 getCategory().then((res) => {
   res.data.forEach((category: { name: string; value: string }) => {
     const c = category.name.split(" ") as string[];
@@ -61,9 +63,13 @@ getCategory().then((res) => {
   });
 });
 
+getRecommendGoods().then((res) => {
+  const allGoods = res.data.filter((c: IGoodsRes) => c.put === "1");
+  recommendList.value = allGoods.slice(0, 4);
+});
 getGoods().then((res) => {
   const allGoods = res.data.filter((c: IGoodsRes) => c.put === "1");
-  goodsList.value = allGoods.slice(0, 4);
+  hotList.value = allGoods.slice(0, 4);
 });
 </script>
 
