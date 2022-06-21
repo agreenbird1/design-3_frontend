@@ -65,7 +65,7 @@
           @click="changeCollection"
           :class="{ 'coll-active': collect }"
         >
-          <HeartOutlined />&nbsp;{{ collect ? "取消收藏" : "收藏" }}
+          <StarFilled />&nbsp;{{ collect ? "取消收藏" : "收藏" }}
         </span>
       </div>
     </div>
@@ -75,7 +75,7 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import NumBox from "@/components/NumBox.vue";
-import { HeartOutlined } from "@vicons/antd";
+import { StarFilled } from "@vicons/antd";
 import type { IGoodsRes } from "../home/types";
 import { ref } from "vue";
 import { useUserStore } from "@/stores/user";
