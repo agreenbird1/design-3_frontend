@@ -150,6 +150,7 @@ const addOrder = () => {
         },
       });
     });
+    selectedGoods.value.forEach((goods) => deleteCart(goods.id));
   }
 };
 const deleteAll = () => {

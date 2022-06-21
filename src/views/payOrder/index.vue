@@ -44,6 +44,7 @@ import { getAddresses, getOrder, updateOrder } from "@/api";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import OrderGoods from "./components/OrderGoods.vue";
+import message from "@/components/Message";
 import type { IGoodsRes } from "../home/types";
 import type { IAddressRes } from "../user/views/address/types";
 import type { IOrderRes } from "./types";
@@ -53,6 +54,7 @@ const order = ref<IOrderRes>();
 const route = useRoute();
 const total = computed(() => {
   return order.value?.products.reduce((p, c, idx) => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return +p + +c.price * +order.value!.number[idx];
   }, 0);
 });
@@ -69,6 +71,7 @@ getAddresses().then((res) => {
 
 const pay = () => {
   updateOrder(address.value?.id as string, order.value?.id as number);
+  message("success", "支付成功！");
   router.replace(`/`);
 };
 </script>
