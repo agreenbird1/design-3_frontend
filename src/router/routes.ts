@@ -1,7 +1,9 @@
 import message from "@/components/Message";
-import cache from "@/utils/cache";
+import { useUserStore } from "@/stores/user";
+import pinia from "@/stores";
 import type { RouteRecordRaw } from "vue-router";
-import type { IUserType } from "./types";
+
+const userStore = useUserStore(pinia);
 
 const routes: RouteRecordRaw[] = [
   {
@@ -47,8 +49,7 @@ const routes: RouteRecordRaw[] = [
           },
         ],
         beforeEnter() {
-          const user = cache.getCache("user") as IUserType;
-          if (user.token) return true;
+          if (userStore && userStore.token) return true;
           else {
             message("warn", "请先登陆！");
             return false;
