@@ -17,7 +17,7 @@
       />
     </n-dropdown>
 
-    <button>搜索</button>
+    <button @click="searchGoods">搜索</button>
   </div>
 </template>
 
@@ -27,6 +27,8 @@ import type { IAssociation } from "@/views/home/components/types";
 import { ref, watch } from "vue";
 import { getAssociateList } from "@/api";
 import { debounce } from "lodash-es";
+import router from "@/router";
+import Message from "./Message";
 
 const searchWords = ref<string>("");
 const associateList = ref<IAssociation[]>([]);
@@ -35,6 +37,18 @@ const getAssociateListApi = debounce(getAssociateList, 400);
 
 const handleSelect = (val: string) => {
   searchWords.value = val;
+};
+const searchGoods = () => {
+  if (searchWords.value.trim() !== "") {
+    router.push({
+      path: "/search",
+      query: {
+        searchWords: searchWords.value,
+      },
+    });
+  } else {
+    Message("warn", "请输入关键字！");
+  }
 };
 watch(
   () => searchWords.value,

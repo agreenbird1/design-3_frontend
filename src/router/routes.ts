@@ -76,6 +76,11 @@ const routes: RouteRecordRaw[] = [
         name: "payOrder",
         component: () => import("@/views/payOrder/index.vue"),
       },
+      {
+        path: "/search",
+        name: "search",
+        component: () => import("@/views/goods/SearchGoods.vue"),
+      },
     ],
   },
   {
