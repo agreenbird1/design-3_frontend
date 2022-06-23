@@ -1,6 +1,6 @@
 <template>
   <div class="sticky-nav" :class="{ show: y >= 80 }">
-    <img src="@/assets/imgs/logo.png" />
+    <img src="@/assets/imgs/logo.png" @click="$router.push('/')" />
     <search />
   </div>
 </template>
