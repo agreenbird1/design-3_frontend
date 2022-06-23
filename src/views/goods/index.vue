@@ -139,7 +139,7 @@ const changeCollection = () => {
         }
       });
     } else {
-      message("warning", "请先登录");
+      message("warn", "请先登录");
     }
   }
 };
@@ -154,7 +154,7 @@ const addCart = () => {
       }
     });
   } else {
-    message("warning", "请先登陆！");
+    message("warn", "请先登陆！");
   }
 };
 </script>
