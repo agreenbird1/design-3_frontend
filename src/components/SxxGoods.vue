@@ -41,6 +41,7 @@ const goGoodsPage = () => {
     font-size: 16px;
   }
   .goods-description {
+    height: 20px;
     padding-left: 20px;
     padding-right: 20px;
     color: #aca7a7;
