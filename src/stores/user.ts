@@ -38,14 +38,18 @@ export const useUserStore = defineStore({
               if (res.status !== 200) {
                 message("error", res.data);
               } else {
-                (this.id = res.data.id),
-                  (this.gender = res.data.gender),
-                  (this.mobile = res.data.mobile),
-                  (this.username = res.data.username),
-                  (this.avatar = res.data.avatar),
-                  (this.token = res.data.token),
-                  message("success", "登陆成功");
-                router.push("/");
+                if (res.data.disabled === "0") {
+                  message("error", "您的账号已被禁用！");
+                } else {
+                  (this.id = res.data.id),
+                    (this.gender = res.data.gender),
+                    (this.mobile = res.data.mobile),
+                    (this.username = res.data.username),
+                    (this.avatar = res.data.avatar),
+                    (this.token = res.data.token),
+                    message("success", "登陆成功");
+                  router.push("/");
+                }
               }
             });
           }
