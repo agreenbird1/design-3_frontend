@@ -8,7 +8,7 @@
           <n-tooltip placement="top-start" trigger="hover">
             <template #trigger>
               <label for="upload_avatar">
-                <img :src="userStore.avatar" />
+                <n-avatar round :size="50" :src="avatar || userStore.avatar" />
               </label>
             </template>
             点击上传头像
@@ -74,16 +74,22 @@ const userInfo = ref({
   username: userStore.username,
   gender: userStore.gender,
 });
+const avatarInput = ref<HTMLInputElement>();
+const avatar = ref<string>();
 
 // 头像上传
 const upload = (e: Event) => {
   // 包装文件
-  const input = e.target as HTMLInputElement;
-  const formData = new FormData();
-  if (input.files) {
-    console.log(input.files[0]);
-    formData.set("avatar", input.files[0]);
-    userStore.updateAvatar(formData);
+  avatarInput.value = e.target as HTMLInputElement;
+  if (avatarInput.value.files) {
+    // FileReader 浏览器提供的方法
+    const reader = new FileReader();
+    // reader里面有个方法readAsDataURL 可以将图片转base64进制
+    reader.readAsDataURL(avatarInput.value.files[0]);
+    reader.onload = () => {
+      // 给声明变量赋值
+      avatar.value = reader.result as string;
+    };
   }
 };
 
@@ -93,6 +99,11 @@ const storeUser = () => {
     username: userInfo.value.username,
     gender: userInfo.value.gender,
   });
+  if (avatarInput.value && avatarInput.value.files) {
+    const formData = new FormData();
+    formData.set("avatar", avatarInput.value.files[0]);
+    userStore.updateAvatar(formData);
+  }
 };
 </script>
 
