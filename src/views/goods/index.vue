@@ -58,16 +58,21 @@
           numCon
         />
       </div>
-      <div class="goods-cart">
-        <span class="cart" @click="addCart"> 加入购物车</span>
-        <span
-          class="coll"
-          @click="changeCollection"
-          :class="{ 'coll-active': collect }"
-        >
-          <StarFilled />&nbsp;{{ collect ? "取消收藏" : "收藏" }}
-        </span>
-      </div>
+      <template v-if="goods?.put === '1'">
+        <div class="goods-cart">
+          <span class="cart" @click="addCart"> 加入购物车</span>
+          <span
+            class="coll"
+            @click="changeCollection"
+            :class="{ 'coll-active': collect }"
+          >
+            <StarFilled />&nbsp;{{ collect ? "取消收藏" : "收藏" }}
+          </span>
+        </div>
+      </template>
+      <template v-else>
+        <div class="put-down">该商品已经下架！</div>
+      </template>
     </div>
   </div>
 </template>
@@ -209,6 +214,18 @@ const addCart = () => {
     }
     .goods-num {
       margin-top: 15px;
+    }
+    .put-down {
+      margin-top: 20px;
+      background-color: rgb(194, 73, 73);
+      width: 300px;
+      height: 60px;
+      border-radius: 10px;
+      font-size: 20px;
+      color: white;
+      text-align: center;
+      line-height: 60px;
+      cursor: pointer;
     }
     .goods-cart {
       display: flex;
